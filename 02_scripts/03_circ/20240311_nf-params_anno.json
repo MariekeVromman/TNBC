@@ -1,0 +1,17 @@
+{
+    "input": "/data/users/mvromman/projects/06_TNBC_circ/samplesheet.csv",
+    "outdir": "/data/tmp/mvromman/20240311_run/20240311_out",
+
+    "tool": "circexplorer2,find_circ,circrna_finder,ciriquant",
+    "module": "circrna_discovery",
+    "bsj_reads": 0,
+    "tool_filter": 0,
+
+    "skip_trimming": false,
+
+    "igenomes_ignore": true,
+    "fasta": "/data/tmp/mvromman/20240311_run/references/GRCh38.p14.genome.fa",
+    "gtf": "/data/tmp/mvromman/20240311_run/references/gencode.v44.chr_patch_hapl_scaff.annotation.gtf",
+    "species": "hsa"
+
+  }
