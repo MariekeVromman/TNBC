@@ -1,5 +1,5 @@
 nextflow run \
-        ~/Documents/GitHub/RNA_seq/scallop/scallop.nf \
+        ~/Documents/GitHub/RNA_seq/03_STAR_scallop_FeatureCounts/scallop.nf \
         -profile local \
         -resume \
         -w /Users/marieke/Documents/nf-work \

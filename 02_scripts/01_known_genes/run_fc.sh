@@ -1,5 +1,5 @@
 nextflow run \
-        ~/Documents/GitHub/RNA_seq/fc/fc.nf \
+        ~/Documents/GitHub/RNA_seq/02b_FeatureCounts/fc.nf \
         -profile local,arm \
         -w /Users/marieke/Documents/nf-work \
         -resume e53a588b-06a0-4444-b8e3-0940ccfc7c38 \

@@ -1,5 +1,5 @@
 # nextflow run \
-#         ~/Documents/GitHub/RNA_seq/fc/fc_introns.nf \
+#         ~/Documents/GitHub/RNA_seq/02b_FeatureCounts/fc_introns.nf \
 #         -profile local,arm \
 #         -w /Users/marieke/Documents/nf-work \
 #         --out_dir /Volumes/INTENSO/02_TNBC/04_gen_type \
@@ -8,7 +8,7 @@
 
 
 nextflow run \
-        ~/Documents/GitHub/RNA_seq/fc/fc_introns.nf \
+        ~/Documents/GitHub/RNA_seq/02b_FeatureCounts/fc_introns.nf \
         -profile local,arm \
         -w /Users/marieke/Documents/nf-work \
         --out_dir /Volumes/INTENSO/ \

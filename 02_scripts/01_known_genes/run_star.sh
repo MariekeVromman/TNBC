@@ -1,5 +1,5 @@
 nextflow run \
-        ~/Documents/GitHub/RNA_seq/STAR/star.nf \
+        ~/Documents/GitHub/RNA_seq/02a_STAR_FeatureCounts/star.nf \
         -profile local,arm \
         -w /Users/marieke/Documents/nf-work \
         --out_dir /Volumes/INTENSO/02_TNBC/all \
