@@ -6,7 +6,7 @@ The samples consits of matched 41 TNBC plasma EV and tumor samples from multiple
 - D307-D303 (05/2022, in SCANDARE-TNBC) contains 20 of the tumor samples
 - D492-D485 (11/2021, in SCANDARE-TNBC) contains 21 of the tumor samples
 
-Additionally, 2 cell line samples (one EV and one cells) are included from sequencing run D886 (in TNBC_EV).
+Additionally, 2 MDA-MB-231 cell line samples (one EV and one cells) are included from sequencing run D886 (in TNBC_EV). 
 
 > [!WARNING]  
 > The labeling of the samples changed. Previously, all samples with an RCB score of 0 or 1 were considered chemosensitive, but now only an RCB score of 0 is considered chemosensitive (and RCB 1 is considered chemoresistant). Be aware that old annotation might accidentaly still be present in some files.
