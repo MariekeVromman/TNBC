@@ -54,14 +54,18 @@ mytheme_discrete_x = mytheme +
 
 #' ## Read data
 
-counts_table = read_tsv('20240502_counts_table.tsv')
+counts_table = read_tsv('../../01_data/01_known_genes/20240502_counts_table.tsv')
 
+circ = read_tsv('../../01_data/03_circ/20240502_all_circ_med.txt')
+
+circ
 
 #' make matrix from df
 counts_matrix = as.matrix(counts_table %>% select(-ENSG))
 rownames(counts_matrix) = counts_table$ENSG
 
 counts_matrix
+
 
 
 #' remove NAs
@@ -79,9 +83,10 @@ coldata = circ %>%
          condition = as.factor(sample_type)) %>%
   select(-sample_type, -ID_NGS)
 
-coldata
+coldata = 
+  coldata %>%
+  arrange(factor(sample, levels = colnames(counts_matrix)))
 
-coldata_matrix = as.matrix(coldata %>% select(-sample))
 
 rownames(coldata_matrix) = coldata$sample
 
@@ -113,26 +118,36 @@ diff_exp = as.data.frame(dds) %>%
 
 diff_exp
 
-# diff_exp %>% write_tsv('../data/diff_exp.tsv')
+normalized_counts = read_tsv('../../01_data/01_known_genes/20240502_normalized_filtered_counts.txt')
 
-diff_exp = read_tsv('../data/diff_exp.tsv')
+diff_exp = diff_exp %>%
+  rename(ENSG = gene_id) %>%
+  left_join(normalized_counts %>% select(ENSG, gene_type_cat, gene_name) %>% unique())
+
+diff_exp %>% write_tsv('../../01_data/01_known_genes/20240620_diff_exp_types.tsv')
+
 
 diff_exp = diff_exp %>%
   mutate(diffexpressed = "NO") %>%
   mutate(diffexpressed = ifelse(log2FoldChange > 0.6 & padj < 0.05, "UP", diffexpressed)) %>%
   mutate(diffexpressed = ifelse(log2FoldChange < -0.6 & padj < 0.05, "DOWN", diffexpressed)) %>%
   mutate(label_on = NA) %>%
-  mutate(label_on = ifelse(-log10(padj) > 22, gene_id, NA))
+  mutate(gene_name = ifelse(is.na(gene_name), ENSG, gene_name)) %>%
+  mutate(label_on = ifelse(-log10(padj) > 1, gene_name, NA)) %>%
+  mutate(gene_type_cat_color = ifelse(log2FoldChange > 0.6 & padj < 0.05, gene_type_cat, NA),
+         gene_type_cat_color = ifelse(log2FoldChange < -0.6 & padj < 0.05, gene_type_cat, gene_type_cat_color))
+
+diff_exp$gene_type_cat_color = factor(diff_exp$gene_type_cat_color,
+                                      levels = c('protein_coding', 'lncRNA', 'circRNA', 'other', NA))
 
 ggplot(data=diff_exp, 
        aes(x=log2FoldChange, y=-log10(padj),
-           #label = label_on
-       )) + 
-  geom_point(alpha = 0.4, 
-             aes(color=diffexpressed)) +
+           label = label_on)) + 
+  geom_point(alpha = 0.5, 
+             aes(color=gene_type_cat_color)) +
   theme_minimal() +
-  geom_vline(xintercept=c(-0.6, 0.6), col="red") +
-  geom_hline(yintercept=-log10(0.05), col="red") +
-  scale_color_manual(values=c("coral", "black", "darkolivegreen3")) #+
+  geom_vline(xintercept=c(-0.6, 0.6)) +
+  geom_hline(yintercept=-log10(0.05)) +
+  geom_text_repel() +
+  theme(legend.title = element_blank())
 
-#geom_text_repel()
